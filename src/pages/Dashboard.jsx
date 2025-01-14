@@ -4,11 +4,11 @@ import ProductList from '../components/ProductList';
 import { API_URL } from '../config';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
+import Navbar from '../components/Navbar';
 
 const Dashboard = ({ setIsAuthenticated }) => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
@@ -33,15 +33,8 @@ const Dashboard = ({ setIsAuthenticated }) => {
     fetchCategories();
     fetchProducts();
   }, []);
-
-  const handleCategoryChange = async (categoryId) => {
-    setSelectedCategory(categoryId);
-    const res = await fetch(`${API_URL}/products?category_id=${categoryId}`);
-    const data = await res.json();
-    setProducts(data);
-  };
-
   const handleAddProduct = async (newProduct) => {
+    console.log(newProduct)
     const res = await fetch(`${API_URL}/products`, {
       method: 'POST',
       headers: {
@@ -114,20 +107,12 @@ const Dashboard = ({ setIsAuthenticated }) => {
     setIsAuthenticated(false);
     navigate('/login'); // Navigate to login page
   };
-
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar handleLogout={handleLogout} />
       {notification && <Notification message={notification} />}
       <div className="container mx-auto py-10">
         <h1 className="text-4xl font-bold mb-10 text-center">Dashboard</h1>
-
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white p-2 rounded-md absolute top-4 right-4"
-        >
-          Logout
-        </button>
 
         <div className="mt-6">
           <ProductList
@@ -153,6 +138,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
           title="Add Product"
           onClose={() => setShowAddModal(false)}
           onSubmit={handleAddProduct}
+          categories={categories} // Pass categories to Modal
         />
       )}
 
@@ -163,6 +149,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
           onClose={() => setShowEditModal(false)}
           onSubmit={handleUpdateProduct}
           initialValues={editProduct}
+          categories={categories} // Pass categories to Modal
         />
       )}
 

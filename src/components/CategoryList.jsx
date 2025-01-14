@@ -1,30 +1,34 @@
-import { useEffect, useState } from 'react';
-import { API_URL } from '../config';
-
-
-
-const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await fetch(`${API_URL}/categories`);
-      const data = await res.json();
-      setCategories(data);
-    };
-
-    fetchCategories();
-  }, []);
-
+const CategoryList = ({ categories, onDelete }) => {
   return (
     <div className="container mx-auto my-10">
       <h2 className="text-3xl font-semibold mb-6">Category List</h2>
-      <div className="grid grid-cols-3 gap-6">
-        {categories.map((category) => (
-          <div key={category._id} className="border p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all">
-            <h3 className="text-xl font-medium">{category.nama}</h3>
-          </div>
-        ))}
+      <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-md">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="text-white border-b">
+              <th className="px-4 py-2 text-left">Category Name</th>
+              <th className="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((category) => (
+              <tr key={category._id} className="border-b text-white">
+                <td className="px-4 py-2">{category.name}</td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => {
+                      console.log(category); // Tambahkan log di sini
+                      onDelete(category);
+                    }}
+                    className="bg-red-500 text-white p-2 rounded-md"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

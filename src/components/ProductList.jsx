@@ -8,8 +8,8 @@ const ProductList = ({ products, onEdit, onDelete }) => {
         {products.map((product) => (
           <div key={product._id} className="bg-gray-800 border p-4 rounded-lg shadow-md hover:bg-gray-700 transition-all">
             <h3 className="text-xl font-medium">{product.nama}</h3>
-            <p className="text-sm">Category: {product.category_id}</p>
-            <p className="text-lg text-gray-400">Price: ${product.harga}</p>
+            <p className="text-sm">Category: {product.category}</p>
+            <p className="text-lg text-gray-400">Price: Rp. {product.harga}</p>
             <p className="text-sm text-gray-400">Stock: {product.jml_stok}</p>
 
             <div className="flex justify-between mt-4">

@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 
 import { useState } from 'react';
+import Category from './pages/Category';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/dashboard" element={isAuthenticated ? <Dashboard setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/login" />} />
+        <Route path="/category" element={isAuthenticated ? <Category setIsAuthenticated={setIsAuthenticated} /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

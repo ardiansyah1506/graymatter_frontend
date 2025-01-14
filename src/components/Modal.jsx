@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-const Modal = ({ title, onClose, onSubmit, initialValues }) => {
+const Modal = ({ title, onClose, onSubmit, initialValues, categories }) => {
   const [formData, setFormData] = useState({
     nama: '',
-    category_id: '',
+    category: '',
     harga: '',
     jml_stok: '',
     ...initialValues,
@@ -39,21 +39,29 @@ const Modal = ({ title, onClose, onSubmit, initialValues }) => {
               name="nama"
               value={formData.nama}
               onChange={handleChange}
-              className="mt-2 w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full p-3 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+  
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">Category</label>
-            <input
-              type="text"
-              name="category_id"
-              value={formData.category_id}
+            <select
+              name="category"
+              value={formData.category}
               onChange={handleChange}
-              className="mt-2 w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full p-3 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            />
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
+  
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">Price</label>
             <input
@@ -61,10 +69,11 @@ const Modal = ({ title, onClose, onSubmit, initialValues }) => {
               name="harga"
               value={formData.harga}
               onChange={handleChange}
-              className="mt-2 w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full p-3 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+  
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">Stock</label>
             <input
@@ -72,10 +81,11 @@ const Modal = ({ title, onClose, onSubmit, initialValues }) => {
               name="jml_stok"
               value={formData.jml_stok}
               onChange={handleChange}
-              className="mt-2 w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full p-3 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+  
           <div className="flex justify-end space-x-4">
             <button
               type="button"
@@ -95,6 +105,7 @@ const Modal = ({ title, onClose, onSubmit, initialValues }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Modal;
